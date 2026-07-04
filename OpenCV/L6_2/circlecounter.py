@@ -1,32 +1,26 @@
 import cv2
 import numpy as np
 
-image = cv2.imread("circles.png")
+image = cv2.imread("blobs.jpg")
 
 if image is None:
     print("Image not Found!")
     exit()
     
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-_, thresh = cv2.threshold(gray, 120, 255, cv2.THRESH_BINARY_INV)
-
-thresh - cv2.GaussianBlur(thresh, (5, 5), 0)
+_, thresh = cv2.threshold(gray, 190, 255, cv2.THRESH_BINARY_INV)
 
 params = cv2.SimpleBlobDetector_Params()
-
-params.minThreshold = 10
-params.maxThreshold = 200
 
 params.filterByColor = True
 params.blobColor = 255
 
 params.filterByArea = True
 
-params.minArea = 1000
-params.maxArea = 50000
+params.minArea = 2000
+params.maxArea = 200000
 
-params.filterByCircularity = True
-params.minCircularity = 0.7
+params.filterByCircularity = False
 params.filterByConvexity = False
 params.filterByInertia = False
 
