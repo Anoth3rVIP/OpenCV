@@ -1,0 +1,46 @@
+import os
+import cv2
+from PIL import Image
+
+path=r"OpenCV/L7/images"
+
+os.chdir(path)
+
+mean_height = 0
+mean_width = 0
+image_files = []
+
+for file in os.listdir('.'):
+    if file.endswith('.jpg') or file.endswith('.jpeg') or file.endswith('.png'):
+        image_files.append(file)
+        
+num_of_images = len(image_files)
+for file in image_files:
+    img = Image.open(os.path.join(path,file))
+    width, height = img.size
+    mean_width += width
+    mean_height += height
+
+mean_width //= num_of_images
+mean_height //= num_of_images
+print('avg_width: ',mean_width)
+print('avg_height: ',mean_height)
+
+for file in image_files:
+    img = Image.open(os.path.join(path,file))
+    width,height = img.size
+    print(width,height)
+    imgresize = img.resize((mean_width, mean_height), Image.LANCZOS)
+    imgresize.save(file, 'JPEG', quality =95)
+    print(file,'isresized')
+
+video_name = 'vid.avi'
+frame = cv2.imread(image_files[0])
+height,width,layers = frame.shape()
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+video = cv2.VideoWriter(video_name, fourcc, 1, (width,height))
+
+for image in image_files:
+    frame = cv2.imread(image)
+    
+#INCOMPLETE
