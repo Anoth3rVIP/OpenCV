@@ -1,8 +1,9 @@
 import os
+from pathlib import Path
 import cv2
 from PIL import Image
 
-path=r"OpenCV/L7/images"
+path= Path.home() / "Documents" / "Stuff" / "Coding" / "Visual Studio Code" / "Jet_Learn" / "OpenCV" / "L7" / "images"
 
 os.chdir(path)
 
@@ -36,11 +37,32 @@ for file in image_files:
 
 video_name = 'vid.avi'
 frame = cv2.imread(image_files[0])
-height,width,layers = frame.shape()
+height,width,layers = frame.shape
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 video = cv2.VideoWriter(video_name, fourcc, 1, (width,height))
 
 for image in image_files:
     frame = cv2.imread(image)
+    video.write(frame)
+
+video.release()
+
+cv2.destroyAllWindows()
+print("Video Created Successfully!")
+
+cap = cv2.VideoCapture(video_name)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+    
+    cv2.imshow("Video Slideshow", frame)
+    
+    if cv2.waitKey(1000) & 0xFF == ord("q"):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
     
 #INCOMPLETE
