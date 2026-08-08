@@ -53,7 +53,7 @@ def grayscale():
     global photo
     img_path = os.path.join(path,image_files[curr_image])
     img = cv2.imread(img_path)
-    gray = cv2.cvtColor(img, cv2.COLOR_BAYER_BG2GRAY)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     gray = cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)
         
     img = Image.fromarray(gray)
@@ -63,6 +63,7 @@ def grayscale():
     label.image = photo
     
 label=Label(root)
+Label.pack()
 load_image()
 
 prev_btn = Button(root, text = "Previous", command = prev_image)
