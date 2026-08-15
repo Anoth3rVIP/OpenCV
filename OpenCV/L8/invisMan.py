@@ -4,7 +4,7 @@ import time
 
 print("OpenCV Version:",cv2.__version__)
 
-capture_vid = cv2.VideoCapture("Video.mp4")
+capture_vid = cv2.VideoCapture("video.mp4")
 
 time.sleep(1)
 
@@ -74,3 +74,20 @@ while capture_vid.isOpened():
     )
     
     final_output = cv2.add(res1, res2)
+    
+    cv2.imshow("Invisible Cloak - Red Cloak", final_output)
+    out.write(final_output)
+    
+    key = cv2.waitKey(delay) & 0xFF
+    if key == 27:
+        break
+
+    if cv2.getWindowProperty(
+        "Invisible Cloak - Red Cloak",
+        cv2.WND_PROP_VISIBLE
+    ) < 1:
+        break
+    
+capture_vid.release()
+out.release()
+cv2.destroyAllWindows()
